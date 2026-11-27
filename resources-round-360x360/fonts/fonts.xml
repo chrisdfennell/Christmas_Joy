@@ -1,0 +1,11 @@
+<resources>
+    <!-- Bitmap fonts baked by tools/gen_fonts.py for this panel size. -->
+    <fonts>
+        <font id="TimeFont"   filename="cj_time.fnt"    antialias="true" />
+        <font id="TimeFontLg" filename="cj_time_lg.fnt" antialias="true" />
+        <font id="LineFont"   filename="cj_line.fnt"    antialias="true" />
+        <font id="DateFont"   filename="cj_date.fnt"    antialias="true" />
+        <font id="DataFont"   filename="cj_data.fnt"    antialias="true" />
+        <font id="SmallFont"  filename="cj_small.fnt"   antialias="true" />
+    </fonts>
+</resources>

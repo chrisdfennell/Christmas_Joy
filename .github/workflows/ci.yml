@@ -1,0 +1,87 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    name: Validate project
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Check required files exist
+        run: |
+          set -e
+          missing=0
+          for f in manifest.xml monkey.jungle \
+                   source/ChristmasJoyApp.mc source/ChristmasJoyView.mc \
+                   resources/settings/properties.xml resources/settings/settings.xml \
+                   resources/strings/strings.xml resources/drawables/launcher_icon.svg; do
+            if [ ! -f "$f" ]; then
+              echo "::error::Missing required file: $f"
+              missing=1
+            fi
+          done
+          [ "$missing" = "0" ] && echo "All required files present."
+          exit $missing
+
+      - name: Validate XML is well-formed
+        run: |
+          python3 - <<'PY'
+          import sys, glob, xml.dom.minidom as minidom
+          # The base resources plus the per-resolution font folders.
+          files = ["manifest.xml"] + glob.glob("resources*/**/*.xml", recursive=True)
+          bad = 0
+          for f in files:
+              try:
+                  minidom.parse(f)
+                  print(f"ok:    {f}")
+              except Exception as e:
+                  print(f"::error file={f}::{e}")
+                  bad += 1
+          sys.exit(1 if bad else 0)
+          PY
+
+      - name: Check every panel size has its fonts
+        run: |
+          python3 - <<'PY'
+          import os, re, sys
+          # Every resources-round-WxH folder named in monkey.jungle must hold the
+          # full font set that tools/gen_fonts.py bakes.
+          names = ["cj_time", "cj_time_lg", "cj_line", "cj_date", "cj_data", "cj_small"]
+          jungle = open("monkey.jungle", encoding="utf-8").read()
+          folders = {"resources"} | set(re.findall(r"(resources-round-\d+x\d+)", jungle))
+          bad = 0
+          for folder in sorted(folders):
+              for n in names:
+                  for ext in (".fnt", ".png"):
+                      path = os.path.join(folder, "fonts", n + ext)
+                      if not os.path.isfile(path):
+                          print(f"::error::Missing {path} (run python tools/gen_fonts.py)")
+                          bad += 1
+              print(f"ok:    {folder}/fonts")
+          sys.exit(1 if bad else 0)
+          PY
+
+      - name: Check the jungle only names products in the manifest
+        run: |
+          python3 - <<'PY'
+          import re, sys
+          manifest = set(re.findall(r'<iq:product id="([^"]+)"', open("manifest.xml", encoding="utf-8").read()))
+          jungle = re.findall(r"^\s*(\w+)\.resourcePath", open("monkey.jungle", encoding="utf-8").read(), re.M)
+          extra = [d for d in jungle if d != "base" and d not in manifest]
+          for d in extra:
+              print(f"::error file=monkey.jungle::{d} has a resourcePath but is not in manifest.xml")
+          print(f"{len(manifest)} products in the manifest, {len(jungle) - 1} with their own font set")
+          sys.exit(1 if extra else 0)
+          PY
+
+      - name: Check the Python tools compile
+        run: python3 -m py_compile tools/gen_fonts.py tools/gen_assets.py
+
+# A full Monkey C compile needs a developer key. That runs in release.yml on
+# version tags, inside a container image that ships the Connect IQ SDK.

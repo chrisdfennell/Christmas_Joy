@@ -1,0 +1,61 @@
+<strings>
+    <string id="AppName">Christmas Joy</string>
+
+    <string id="ThemeTitle">Colour theme</string>
+    <string id="ThemePrompt">Which colours for the wreath, the ornaments and the sky?</string>
+    <string id="ThemeBlush">Blush &amp; Gold</string>
+    <string id="ThemeClassic">Classic red &amp; green</string>
+    <string id="ThemeFrosted">Frosted silver &amp; ice</string>
+    <string id="ThemePlaid">Cozy Plaid</string>
+
+    <string id="TimeSizeTitle">Time size</string>
+    <string id="TimeSizePrompt">Large makes the time bigger and leaves out the two spots beside it.</string>
+    <string id="SizeNormal">Normal</string>
+    <string id="SizeLarge">Large</string>
+
+    <string id="SkyTitle">Sky</string>
+    <string id="SkyPrompt">Auto turns the globe to night at sunset and back to day at sunrise.</string>
+    <string id="SkyAuto">Auto (sunset)</string>
+    <string id="SkyDay">Always day</string>
+    <string id="SkyNight">Always night</string>
+
+    <string id="WreathTitle">Wreath lights</string>
+    <string id="WreathPrompt">The ornaments light up one by one as this fills.</string>
+    <string id="WreathSteps">Step goal</string>
+    <string id="WreathEnergy">Body Battery</string>
+    <string id="WreathBattery">Watch battery</string>
+    <string id="WreathAlways">Always lit</string>
+
+    <string id="ShowDateTitle">Show the date</string>
+    <string id="ShowDatePrompt">Show the day and date under the top line.</string>
+
+    <string id="SlotPrompt">What shows here? Pick Nothing to leave the spot empty.</string>
+    <string id="SlotTopPrompt">What the line across the top says. Anything too long for the script is printed instead.</string>
+
+    <string id="SlotTopTitle">Top line</string>
+    <string id="SlotLeftTitle">Left of the time</string>
+    <string id="SlotRightTitle">Right of the time</string>
+    <string id="SlotSnow1Title">On the snow, left</string>
+    <string id="SlotSnow2Title">On the snow, middle</string>
+    <string id="SlotSnow3Title">On the snow, right</string>
+
+    <string id="MetricNone">Nothing</string>
+    <string id="MetricCountdown">Christmas countdown</string>
+    <string id="MetricSaying">Saying of the day</string>
+    <string id="MetricSteps">Steps</string>
+    <string id="MetricHr">Heart rate</string>
+    <string id="MetricCals">Calories</string>
+    <string id="MetricDist">Distance</string>
+    <string id="MetricFloors">Floors climbed</string>
+    <string id="MetricActive">Active minutes</string>
+    <string id="MetricGoal">Step goal %</string>
+    <string id="MetricEnergy">Body Battery</string>
+    <string id="MetricStress">Stress</string>
+    <string id="MetricBreath">Respiration</string>
+    <string id="MetricBatt">Watch battery %</string>
+    <string id="MetricBattDays">Battery days left</string>
+    <string id="MetricMsgs">Notifications</string>
+    <string id="MetricAlarms">Alarms</string>
+    <string id="MetricAlt">Altitude</string>
+    <string id="MetricWeather">Weather</string>
+</strings>

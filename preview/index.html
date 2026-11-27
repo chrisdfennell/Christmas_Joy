@@ -1,0 +1,755 @@
+<title>Christmas Joy</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Great+Vibes&family=Quicksand:wght@500;600;700&display=swap">
+<style>
+/* Layout: the watch on the left (sticky), the settings panel on the right; stacked on phones. */
+:root {
+  --bg: #FBF3F1;
+  --panel: #FFFFFF;
+  --fg: #3A2530;
+  --muted: #866874;
+  --line: #EBD9DC;
+  --accent: #B04F6A;
+  --accent-soft: #F6DCE2;
+  --gold: #A87A32;
+  --bezel: #26252A;
+  --bezel-edge: #3B3A41;
+  --bezel-nub: #1B1A1E;
+  --shadow: rgba(80, 30, 45, .18);
+  --font-display: "Great Vibes", "Segoe Script", cursive;
+  --font-ui: "Quicksand", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1B1418; --panel: #261C22; --fg: #F4E7EA; --muted: #BCA2AB; --line: #3A2B33;
+    --accent: #EC93AA; --accent-soft: #3E2631; --gold: #E3BE78; --shadow: rgba(0, 0, 0, .45);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1B1418; --panel: #261C22; --fg: #F4E7EA; --muted: #BCA2AB; --line: #3A2B33;
+  --accent: #EC93AA; --accent-soft: #3E2631; --gold: #E3BE78; --shadow: rgba(0, 0, 0, .45);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg); font-family: var(--font-ui); font-size: 15px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 48px;
+}
+.wrap { max-width: 1060px; margin: 0 auto; display: grid; gap: 28px; }
+header { display: grid; gap: 2px; }
+header h1 { font-family: var(--font-display); font-weight: 400; font-size: clamp(48px, 9vw, 72px); line-height: 1; margin: 0; color: var(--accent); }
+header p { margin: 0; color: var(--muted); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; font-size: 12px; }
+
+.layout { display: grid; gap: 28px; grid-template-columns: 1fr; align-items: start; }
+@media (min-width: 880px) { .layout { grid-template-columns: minmax(380px, 1fr) minmax(0, 1.1fr); } .stage { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 20px); } }
+
+.stage { display: grid; justify-items: center; gap: 18px; }
+.bezel {
+  --size: min(380px, 82vw);
+  width: var(--size); max-width: 100%; aspect-ratio: 1; border-radius: 50%; padding: 5%;
+  background: var(--bezel); position: relative;
+  box-shadow: inset 0 0 0 3px var(--bezel-edge), 0 22px 46px var(--shadow);
+}
+.bezel::before, .bezel::after { content: ""; position: absolute; width: 4%; height: 13%; background: var(--bezel-nub); border-radius: 6px; top: 26%; }
+.bezel::before { left: -2.5%; }
+.bezel::after { right: -2.5%; }
+.bezel canvas { display: block; width: 100%; height: 100%; border-radius: 50%; background: #000; }
+
+.watch-controls { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+button { font: inherit; font-weight: 700; cursor: pointer; border-radius: 999px; border: 1.5px solid var(--accent); background: transparent; color: var(--accent); padding: 7px 16px; }
+button:hover { background: var(--accent-soft); }
+button[aria-pressed="true"] { background: var(--accent); color: var(--panel); }
+button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.status { font-size: 13px; color: var(--muted); font-weight: 600; text-align: center; min-height: 1.5em; }
+.caption { font-size: 13px; color: var(--muted); max-width: 38ch; text-align: center; margin: 0; }
+
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 22px; display: grid; gap: 22px; min-width: 0; }
+.group { display: grid; gap: 12px; }
+.group h2 { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: 32px; line-height: 1.1; color: var(--accent); }
+.row { display: grid; gap: 6px; }
+.row > .label { font-size: 12px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+.seg { display: flex; flex-wrap: wrap; gap: 6px; border: 0; padding: 0; margin: 0; min-width: 0; }
+.seg legend { font-size: 12px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); padding: 0; margin-bottom: 6px; }
+.seg label { position: relative; }
+.seg input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.seg span { display: inline-flex; align-items: center; gap: 7px; padding: 6px 13px; border-radius: 999px; border: 1.5px solid var(--line); font-weight: 600; font-size: 14px; }
+.seg input:checked + span { border-color: var(--accent); background: var(--accent-soft); color: var(--fg); }
+.seg input:focus-visible + span { outline: 2px solid var(--gold); outline-offset: 2px; }
+.dots { display: inline-flex; }
+.dots i { width: 12px; height: 12px; border-radius: 50%; margin-left: -3px; border: 1.5px solid var(--panel); }
+.dots i:first-child { margin-left: 0; }
+
+.slots { display: grid; gap: 10px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 460px) { .slots { grid-template-columns: 1fr; } }
+select, input[type="date"], input[type="time"] {
+  font: inherit; font-weight: 600; color: var(--fg); background: var(--bg); border: 1.5px solid var(--line); border-radius: 10px; padding: 7px 10px; width: 100%; min-width: 0;
+}
+.inline { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.inline > input { flex: 1 1 140px; width: auto; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips button { font-size: 13px; padding: 4px 12px; border-width: 1px; }
+.slider { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; align-items: center; }
+.slider .label { font-size: 12px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+.slider output { font-weight: 700; font-variant-numeric: tabular-nums; }
+.slider input { grid-column: 1 / -1; accent-color: var(--accent); width: 100%; }
+.check { display: flex; gap: 8px; align-items: center; font-weight: 600; }
+.check input { accent-color: var(--accent); width: 17px; height: 17px; }
+.hint { font-size: 13px; color: var(--muted); margin: 0; }
+hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Christmas Joy</h1>
+    <p>Garmin watch face preview · wreath &amp; snow globe</p>
+  </header>
+
+  <div class="layout">
+    <section class="stage" aria-label="Watch preview">
+      <div class="bezel"><canvas id="face" aria-label="Christmas Joy watch face"></canvas></div>
+      <div class="watch-controls">
+        <button id="wake" type="button">Raise wrist</button>
+        <button id="aod" type="button" aria-pressed="false">Always-On</button>
+      </div>
+      <div class="status" id="status" aria-live="polite"></div>
+      <p class="caption">Drawn only with circles, polygons, lines and text, the same tools a Garmin watch face has, so the real face can match this preview.</p>
+    </section>
+
+    <section class="panel" aria-label="Face settings">
+      <div class="group">
+        <h2>Look</h2>
+        <fieldset class="seg" id="theme">
+          <legend>Colour theme</legend>
+          <label><input type="radio" name="theme" id="th-blush" value="blush" checked><span><span class="dots"><i style="background:#F3CBD3"></i><i style="background:#D8AE5E"></i><i style="background:#5F7F68"></i></span>Blush &amp; Gold</span></label>
+          <label><input type="radio" name="theme" id="th-classic" value="classic"><span><span class="dots"><i style="background:#C8283C"></i><i style="background:#D9A93F"></i><i style="background:#245C3B"></i></span>Classic</span></label>
+          <label><input type="radio" name="theme" id="th-frosted" value="frosted"><span><span class="dots"><i style="background:#D9E9F4"></i><i style="background:#8CC8E8"></i><i style="background:#C9D3DD"></i></span>Frosted</span></label>
+          <label><input type="radio" name="theme" id="th-plaid" value="plaid"><span><span class="dots"><i style="background:#B3343A"></i><i style="background:#E7D2C0"></i><i style="background:#2C6141"></i></span>Cozy Plaid</span></label>
+        </fieldset>
+        <fieldset class="seg">
+          <legend>Time size</legend>
+          <label><input type="radio" name="timeSize" id="ts-normal" value="normal" checked><span>Normal</span></label>
+          <label><input type="radio" name="timeSize" id="ts-large" value="large"><span>Large (hides the side spots)</span></label>
+        </fieldset>
+        <fieldset class="seg">
+          <legend>Clock</legend>
+          <label><input type="radio" name="clock" id="ck-12" value="12" checked><span>12-hour</span></label>
+          <label><input type="radio" name="clock" id="ck-24" value="24"><span>24-hour</span></label>
+        </fieldset>
+      </div>
+
+      <hr>
+
+      <div class="group">
+        <h2>Day &amp; weather</h2>
+        <div class="row">
+          <span class="label">Date and time</span>
+          <div class="inline">
+            <input type="date" id="dateIn" aria-label="Date">
+            <input type="time" id="timeIn" aria-label="Time">
+            <button type="button" id="nowBtn">Now</button>
+          </div>
+          <div class="chips">
+            <button type="button" data-day="12-24">Christmas Eve</button>
+            <button type="button" data-day="12-25">Christmas Day</button>
+            <button type="button" data-day="12-28">Dec 28</button>
+            <button type="button" data-day="01-01">New Year's Day</button>
+          </div>
+        </div>
+        <fieldset class="seg">
+          <legend>Sky</legend>
+          <label><input type="radio" name="sky" id="sk-auto" value="auto" checked><span>Auto (night after 5 pm)</span></label>
+          <label><input type="radio" name="sky" id="sk-day" value="day"><span>Day</span></label>
+          <label><input type="radio" name="sky" id="sk-night" value="night"><span>Night</span></label>
+        </fieldset>
+        <fieldset class="seg">
+          <legend>Weather</legend>
+          <label><input type="radio" name="weather" id="wx-clear" value="clear"><span>Clear</span></label>
+          <label><input type="radio" name="weather" id="wx-cloudy" value="cloudy" checked><span>Cloudy</span></label>
+          <label><input type="radio" name="weather" id="wx-snow" value="snow"><span>Snowing</span></label>
+          <label><input type="radio" name="weather" id="wx-rain" value="rain"><span>Rain</span></label>
+        </fieldset>
+        <p class="hint">More snow falls inside the globe when it is really snowing outside.</p>
+      </div>
+
+      <hr>
+
+      <div class="group">
+        <h2>What it shows</h2>
+        <p class="hint">Every spot can show any of these. Pick "Nothing" to leave a spot empty.</p>
+        <div class="slots">
+          <label class="row"><span class="label">Top line</span><select id="slot-top"></select></label>
+          <label class="row"><span class="label">Wreath lights</span>
+            <select id="wreath">
+              <option value="stepGoal">Step goal</option>
+              <option value="bb">Body Battery</option>
+              <option value="battery">Watch battery</option>
+              <option value="off">Always lit</option>
+            </select>
+          </label>
+          <label class="row"><span class="label">Left of time</span><select id="slot-left"></select></label>
+          <label class="row"><span class="label">Right of time</span><select id="slot-right"></select></label>
+          <label class="row"><span class="label">Snow, left</span><select id="slot-b1"></select></label>
+          <label class="row"><span class="label">Snow, middle</span><select id="slot-b2"></select></label>
+          <label class="row"><span class="label">Snow, right</span><select id="slot-b3"></select></label>
+        </div>
+        <label class="check"><input type="checkbox" id="showDate" checked> Show the date line</label>
+      </div>
+
+      <hr>
+
+      <div class="group">
+        <h2>Sample readings</h2>
+        <div class="slider"><label class="label" for="steps">Steps (goal 10,000)</label><output id="stepsOut" for="steps"></output><input type="range" id="steps" min="0" max="12000" step="50" value="8204"></div>
+        <div class="slider"><label class="label" for="bb">Body Battery</label><output id="bbOut" for="bb"></output><input type="range" id="bb" min="0" max="100" value="64"></div>
+        <div class="slider"><label class="label" for="battery">Watch battery</label><output id="batteryOut" for="battery"></output><input type="range" id="battery" min="0" max="100" value="78"></div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>
+(() => {
+const W = 454, C = 227, TAU = Math.PI * 2;
+const canvas = document.getElementById('face');
+const ctx = canvas.getContext('2d');
+
+// ---------- themes (flat colours only: the watch has no gradients) ----------
+const THEMES = {
+  blush: {
+    day:   { sky:'#F3CBD3', snowBack:'#FBEFF2', snowFront:'#FFFFFF', flake:'#FFFFFF', time:'#8E3553', date:'#7C4A5A', line:'#9E6A2C', data:'#7C4A5A', dataSnow:'#7C4A5A', icon:'#B5546E', star:'#FFFFFF', glass:'#F9E0E6', window:'#D9E6EE' },
+    night: { sky:'#2C2142', snowBack:'#B9ADCB', snowFront:'#DCD3E6', flake:'#FFFFFF', time:'#EDC77F', date:'#E8D5DE', line:'#F2D9A6', data:'#E8D5DE', dataSnow:'#4E3A66', icon:'#F0A3B6', star:'#F6E7C1', glass:'#3E3258', window:'#FFD47A' },
+    greens:['#45604D','#5F7F68','#7E9C83','#A3BDA6'], ornaments:['#D8AE5E','#E58FA5','#FFF3E3','#C98A9B'],
+    berry:'#B5546E', bow:'#D9778F', bowDark:'#AE566F', knot:'#D8AE5E', iconSnow:'#B5546E',
+    cottage:{ wall:'#F6E6E0', trim:'#FFFFFF', roof:'#9C6B7A', door:'#B5546E' }, pine:['#5F7F68','#4E6E58'], trunk:'#7A5A4A'
+  },
+  classic: {
+    day:   { sky:'#CFE2EE', snowBack:'#EEF5FA', snowFront:'#FFFFFF', flake:'#FFFFFF', time:'#A01E32', date:'#2C3E50', line:'#2E6B45', data:'#2C3E50', dataSnow:'#2C3E50', icon:'#C8283C', star:'#FFFFFF', glass:'#E2EDF5', window:'#F4F8FB' },
+    night: { sky:'#14223F', snowBack:'#AFC0D8', snowFront:'#D7E1EE', flake:'#FFFFFF', time:'#F0C76A', date:'#DCE6F0', line:'#F3D58E', data:'#DCE6F0', dataSnow:'#1F3352', icon:'#F06A7A', star:'#FFF1C4', glass:'#22355A', window:'#FFD47A' },
+    greens:['#173F2A','#245C3B','#33784C','#4E9563'], ornaments:['#C8283C','#D9A93F','#F5F1EA','#8E1B2C'],
+    berry:'#D62839', bow:'#C8283C', bowDark:'#8E1B2C', knot:'#D9A93F', iconSnow:'#C8283C',
+    cottage:{ wall:'#B8323F', trim:'#FFFFFF', roof:'#5B3B30', door:'#2E6B45' }, pine:['#245C3B','#1B4A30'], trunk:'#5B3B30'
+  },
+  frosted: {
+    day:   { sky:'#D3E4F1', snowBack:'#F0F6FA', snowFront:'#FFFFFF', flake:'#FFFFFF', time:'#2D5278', date:'#3D5468', line:'#4F769C', data:'#3D5468', dataSnow:'#3D5468', icon:'#4F86B8', star:'#FFFFFF', glass:'#E6F1F8', window:'#F4F8FB' },
+    night: { sky:'#15233D', snowBack:'#A9BCD3', snowFront:'#D3DEEA', flake:'#FFFFFF', time:'#DCEAF7', date:'#BFD2E4', line:'#A9D3EE', data:'#BFD2E4', dataSnow:'#22374F', icon:'#8CC8E8', star:'#E9F4FF', glass:'#223556', window:'#FFE3A3' },
+    greens:['#3E5A63','#56767F','#7495A0','#A6C2CA'], ornaments:['#C9D3DD','#8CC8E8','#FFFFFF','#B9B0E3'],
+    berry:'#9FC6E6', bow:'#A9C3DC', bowDark:'#7593B2', knot:'#E4ECF3', iconSnow:'#4F86B8',
+    cottage:{ wall:'#9DB2C6', trim:'#FFFFFF', roof:'#5D7087', door:'#4F86B8' }, pine:['#56767F','#3E5A63'], trunk:'#5D5A66'
+  },
+  plaid: {
+    day:   { sky:'#E7D2C0', stripe:'#DDBFA8', cross:'#D0AF95', snowBack:'#FBF6EE', snowFront:'#FFFFFF', flake:'#FFFFFF', time:'#8E2328', date:'#5B3A2E', line:'#2F6B44', data:'#5B3A2E', dataSnow:'#5B3A2E', icon:'#B3343A', star:'#FFFFFF', glass:'#EFE2D6', window:'#F6EFE6' },
+    night: { sky:'#3A1F1F', stripe:'#472727', cross:'#552E2E', snowBack:'#CDBFB8', snowFront:'#E9E0DA', flake:'#FFFFFF', time:'#F2D7A6', date:'#EBDAD0', line:'#F2D7A6', data:'#EBDAD0', dataSnow:'#4A2A24', icon:'#E8787D', star:'#FCE9C8', glass:'#4C2C2C', window:'#FFD47A' },
+    greens:['#1F4A31','#2C6141','#3D7A52','#5A9468'], ornaments:['#B3343A','#F2E6D4','#D9A93F','#2F6B44'],
+    berry:'#C23A40', bow:'#B3343A', bowDark:'#7E2227', knot:'#F2E6D4', iconSnow:'#B3343A', plaid:true,
+    cottage:{ wall:'#8B5E3C', trim:'#F2E6D4', roof:'#4E342A', door:'#B3343A' }, pine:['#2C6141','#1F4A31'], trunk:'#4E342A'
+  }
+};
+
+const SAYINGS = ["Merry & Bright", "Let it snow", "Fa la la la la", "Joy to the world", "Believe", "Peace on earth",
+  "'Tis the season", "Warm & cozy", "Oh what fun", "Sleigh bells ring", "Holly jolly", "Baby, it's cold outside",
+  "Home for the holidays", "Make it merry"];
+
+// ---------- the data catalog: every spot picks one of these ----------
+const METRICS = [
+  { id:'none', name:'Nothing', group:'' },
+  { id:'countdown', name:'Christmas countdown', group:'Christmas', icon:'gift' },
+  { id:'saying', name:'Saying of the day (top line only)', group:'Christmas', topOnly:true },
+  { id:'steps', name:'Steps', group:'Health', icon:'steps' },
+  { id:'heartRate', name:'Heart rate', group:'Health', icon:'heart' },
+  { id:'calories', name:'Calories', group:'Health', icon:'flame' },
+  { id:'distance', name:'Distance', group:'Health', icon:'pin' },
+  { id:'floors', name:'Floors climbed', group:'Health', icon:'stairs' },
+  { id:'activeMin', name:'Active minutes', group:'Health', icon:'timer' },
+  { id:'stepGoal', name:'Step goal %', group:'Health', icon:'star' },
+  { id:'bb', name:'Body Battery', group:'Health', icon:'bolt' },
+  { id:'stress', name:'Stress', group:'Health', icon:'stress' },
+  { id:'resp', name:'Respiration', group:'Health', icon:'resp' },
+  { id:'battery', name:'Watch battery %', group:'Watch', icon:'battery' },
+  { id:'batteryDays', name:'Battery days left', group:'Watch', icon:'battery' },
+  { id:'notifications', name:'Notifications', group:'Watch', icon:'envelope' },
+  { id:'alarms', name:'Alarms', group:'Watch', icon:'bell' },
+  { id:'altitude', name:'Altitude', group:'Watch', icon:'mountain' },
+  { id:'weather', name:'Weather', group:'Weather', icon:'weather' },
+];
+const MBY = Object.fromEntries(METRICS.map(m => [m.id, m]));
+const SLOT_IDS = ['top','left','right','b1','b2','b3'];
+
+const DEFAULTS = { theme:'blush', timeSize:'normal', clock:'12', sky:'auto', weather:'cloudy', showDate:true, wreath:'stepGoal',
+  slots:{ top:'countdown', left:'heartRate', right:'weather', b1:'steps', b2:'battery', b3:'notifications' },
+  steps:8204, bb:64, battery:78 };
+let S = structuredClone(DEFAULTS);
+try { const saved = JSON.parse(localStorage.getItem('cj-preview') || 'null'); if (saved) S = { ...S, ...saved, slots:{ ...S.slots, ...(saved.slots||{}) } }; } catch (e) {}
+const save = () => { try { localStorage.setItem('cj-preview', JSON.stringify(S)); } catch (e) {} };
+
+let live = true, manualDate = null, awakeUntil = 0, aod = false;
+
+// ---------- helpers ----------
+// The same pseudo-random sequence as rnd() in source/ChristmasJoyView.mc, so the
+// leaves, stars and snow land in the same places on the watch.
+function rng(seed) { let a = seed & 0x7fffffff; return () => { a = (Math.imul(a, 1103515245) + 12345) & 0x7fffffff; return ((a >> 16) & 0x7fff) / 32768; }; }
+function rgb(h) { const n = parseInt(h.slice(1), 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; }
+function mix(a, b, t) { const A = rgb(a), B = rgb(b); return '#' + A.map((v, i) => Math.round(v + (B[i] - v) * t).toString(16).padStart(2, '0')).join(''); }
+const fc = (x, y, r, c) => { ctx.fillStyle = c; ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); ctx.fill(); };
+const fe = (x, y, rx, ry, c) => { ctx.fillStyle = c; ctx.beginPath(); ctx.ellipse(x, y, rx, ry, 0, 0, TAU); ctx.fill(); };
+const fr = (x, y, w, h, c) => { ctx.fillStyle = c; ctx.fillRect(x, y, w, h); };
+const fp = (pts, c) => { ctx.fillStyle = c; ctx.beginPath(); pts.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.closePath(); ctx.fill(); };
+const ln = (x1, y1, x2, y2, c, w) => { ctx.strokeStyle = c; ctx.lineWidth = w; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke(); };
+const pl = (pts, c, w) => { ctx.strokeStyle = c; ctx.lineWidth = w; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.beginPath(); pts.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.stroke(); };
+const ring = (x, y, r, c, w) => { ctx.strokeStyle = c; ctx.lineWidth = w; ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); ctx.stroke(); };
+const fmt = n => n.toLocaleString('en-US');
+
+const FONT_TIME = (s) => `700 ${s}px "Dancing Script", cursive`;
+const FONT_LINE = (s) => `400 ${s}px "Great Vibes", cursive`;
+const FONT_DATA = (s) => `700 ${s}px "Quicksand", sans-serif`;
+
+function fitSize(text, fontFn, size, maxW, min) {
+  let s = size; ctx.font = fontFn(s);
+  while (s > min && ctx.measureText(text).width > maxW) { s -= 1; ctx.font = fontFn(s); }
+  return s;
+}
+function textCentered(text, x, yMid, font, color, spacing) {
+  ctx.font = font; ctx.fillStyle = color; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+  if ('letterSpacing' in ctx) ctx.letterSpacing = spacing ? spacing + 'px' : '0px';
+  const m = ctx.measureText(text);
+  const y = yMid + (m.actualBoundingBoxAscent - m.actualBoundingBoxDescent) / 2;
+  ctx.fillText(text, x, y);
+  if ('letterSpacing' in ctx) ctx.letterSpacing = '0px';
+  return m;
+}
+
+// ---------- the day: countdown, sayings, readings ----------
+function season(d) {
+  const m = d.getMonth(), day = d.getDate();
+  if (m === 11 && day === 25) return { kind:'xmas' };
+  if (m === 11 && day === 24) return { kind:'eve', days:1 };
+  if (m === 11 && day >= 26 && day <= 30) return { kind:'holidays' };
+  if ((m === 11 && day === 31) || (m === 0 && day <= 6)) return { kind:'newyear' };
+  const y = d.getFullYear();
+  const days = Math.round((Date.UTC(y, 11, 25) - Date.UTC(y, m, day)) / 864e5);
+  return { kind:'count', days };
+}
+function dayOfYear(d) { return Math.round((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - Date.UTC(d.getFullYear(), 0, 1)) / 864e5); }
+const WX = { clear:{ temp:34, word:'clear', icon:'sun' }, cloudy:{ temp:31, word:'cloudy', icon:'cloud' }, snow:{ temp:28, word:'snowy', icon:'snow' }, rain:{ temp:38, word:'rainy', icon:'rain' } };
+
+function smallValue(id, d) {
+  const goal = Math.round(S.steps / 100);
+  switch (id) {
+    case 'countdown': { const s = season(d); return s.kind === 'count' || s.kind === 'eve' ? String(s.days) : s.kind === 'xmas' ? 'Today' : 'Joy'; }
+    case 'steps': return fmt(S.steps);
+    case 'heartRate': return '72';
+    case 'calories': return '1,486';
+    case 'distance': return '3.2';
+    case 'floors': return '7';
+    case 'activeMin': return '34';
+    case 'stepGoal': return goal + '%';
+    case 'bb': return String(S.bb);
+    case 'stress': return '28';
+    case 'resp': return '15';
+    case 'battery': return S.battery + '%';
+    case 'batteryDays': return Math.max(0, Math.round(S.battery / 9)) + 'd';
+    case 'notifications': return '3';
+    case 'alarms': return '1';
+    case 'altitude': return '812';
+    case 'weather': return WX[S.weather].temp + '°';
+  }
+  return '';
+}
+function lineText(id, d) {
+  switch (id) {
+    case 'countdown': { const s = season(d);
+      if (s.kind === 'count') return s.days === 1 ? "1 sleep 'til Christmas" : `${s.days} sleeps 'til Christmas`;
+      return { eve:"It's Christmas Eve!", xmas:'Merry Christmas!', holidays:'Happy Holidays', newyear:'Happy New Year!' }[s.kind]; }
+    case 'saying': return SAYINGS[dayOfYear(d) % SAYINGS.length];
+    case 'steps': return fmt(S.steps) + ' steps';
+    case 'heartRate': return '72 beats a minute';
+    case 'calories': return '1,486 calories';
+    case 'distance': return '3.2 miles today';
+    case 'floors': return '7 floors climbed';
+    case 'activeMin': return '34 active minutes';
+    case 'stepGoal': return Math.round(S.steps / 100) + '% of my steps';
+    case 'bb': return 'Energy ' + S.bb;
+    case 'stress': return 'Stress 28';
+    case 'resp': return '15 breaths a minute';
+    case 'battery': return 'Battery ' + S.battery + '%';
+    case 'batteryDays': return Math.max(0, Math.round(S.battery / 9)) + ' days of battery';
+    case 'notifications': return '3 new messages';
+    case 'alarms': return '1 alarm set';
+    case 'altitude': return '812 feet up';
+    case 'weather': return `${WX[S.weather].temp}° and ${WX[S.weather].word}`;
+  }
+  return '';
+}
+
+// ---------- icons: unit box, drawn with shapes only ----------
+function icon(type, x, y, s, c, bg) {
+  const P = (u, v) => [x + u * s, y + v * s];
+  const pts = (arr) => arr.map(([u, v]) => P(u, v));
+  switch (type) {
+    case 'heart':
+      fc(...P(-.22, -.12), .26 * s, c); fc(...P(.22, -.12), .26 * s, c);
+      fp(pts([[-.47, -.02], [.47, -.02], [0, .46]]), c); break;
+    case 'steps':
+      fe(...P(-.2, .0), .14 * s, .24 * s, c); fe(...P(-.2, .36), .1 * s, .09 * s, c);
+      fe(...P(.2, -.2), .14 * s, .24 * s, c); fe(...P(.2, .16), .1 * s, .09 * s, c); break;
+    case 'flame':
+      fp(pts([[0, -.5], [.18, -.22], [.36, .06], [.32, .3], [.14, .47], [-.14, .47], [-.32, .3], [-.36, .06], [-.2, -.14], [-.08, .02]]), c);
+      fp(pts([[.02, .02], [.14, .22], [.1, .4], [-.1, .4], [-.14, .22]]), bg); break;
+    case 'pin':
+      fc(...P(0, -.12), .32 * s, c); fp(pts([[-.29, -.02], [.29, -.02], [0, .5]]), c); fc(...P(0, -.12), .12 * s, bg); break;
+    case 'stairs':
+      fp(pts([[-.5, .45], [-.5, .2], [-.22, .2], [-.22, -.05], [.06, -.05], [.06, -.3], [.45, -.3], [.45, .45]]), c); break;
+    case 'timer':
+      ring(...P(0, .06), .36 * s, c, .12 * s); fr(...P(-.1, -.5), .2 * s, .12 * s, c);
+      ln(...P(0, .06), ...P(0, -.16), c, .1 * s); ln(...P(0, .06), ...P(.15, .12), c, .1 * s); break;
+    case 'star': {
+      const a = []; for (let i = 0; i < 10; i++) { const r = i % 2 ? .22 : .5, t = -Math.PI / 2 + i * Math.PI / 5; a.push([Math.cos(t) * r, Math.sin(t) * r + .04]); }
+      fp(pts(a), c); break; }
+    case 'bolt':
+      fp(pts([[.12, -.5], [-.3, .08], [-.02, .08], [-.12, .5], [.32, -.1], [.04, -.1]]), c); break;
+    case 'stress':
+      pl(pts([[-.5, .02], [-.3, .02], [-.17, -.34], [.02, .36], [.16, -.18], [.28, .02], [.5, .02]]), c, .11 * s); break;
+    case 'resp':
+      pl(pts([[-.45, -.22], [.2, -.22], [.32, -.32]]), c, .1 * s); pl(pts([[-.45, 0], [.38, 0]]), c, .1 * s); pl(pts([[-.45, .22], [.12, .22], [.24, .32]]), c, .1 * s); break;
+    case 'battery': {
+      ctx.strokeStyle = c; ctx.lineWidth = .1 * s; ctx.strokeRect(...P(-.45, -.25), .82 * s, .5 * s);
+      fr(...P(.38, -.1), .1 * s, .2 * s, c);
+      const lvl = Math.max(.08, S.battery / 100); fr(...P(-.36, -.16), .64 * s * lvl, .32 * s, c); break; }
+    case 'envelope':
+      fr(...P(-.46, -.3), .92 * s, .6 * s, c); pl(pts([[-.4, -.24], [0, .06], [.4, -.24]]), bg, .08 * s); break;
+    case 'bell':
+      fc(...P(0, -.08), .3 * s, c); fr(...P(-.3, -.08), .6 * s, .3 * s, c); fr(...P(-.42, .18), .84 * s, .1 * s, c); fc(...P(0, .38), .09 * s, c); break;
+    case 'mountain':
+      fp(pts([[-.5, .4], [-.1, -.36], [.16, .08], [.28, -.06], [.5, .4]]), c); fp(pts([[-.1, -.36], [-.22, -.14], [.02, -.14]]), bg); break;
+    case 'gift':
+      fr(...P(-.4, -.08), .8 * s, .55 * s, c); fr(...P(-.47, -.26), .94 * s, .16 * s, c);
+      fr(...P(-.06, -.26), .12 * s, .73 * s, bg);
+      fp(pts([[0, -.28], [-.3, -.5], [-.22, -.28]]), c); fp(pts([[0, -.28], [.3, -.5], [.22, -.28]]), c); break;
+    case 'sun':
+      fc(x, y, .22 * s, c);
+      for (let i = 0; i < 8; i++) { const t = i * Math.PI / 4; ln(x + Math.cos(t) * .33 * s, y + Math.sin(t) * .33 * s, x + Math.cos(t) * .48 * s, y + Math.sin(t) * .48 * s, c, .09 * s); } break;
+    case 'cloud':
+      fc(...P(-.2, .08), .2 * s, c); fc(...P(.06, -.06), .27 * s, c); fc(...P(.27, .1), .18 * s, c); fr(...P(-.2, .08), .47 * s, .2 * s, c); break;
+    case 'rain':
+      fc(...P(-.2, -.06), .18 * s, c); fc(...P(.04, -.18), .24 * s, c); fc(...P(.25, -.04), .16 * s, c); fr(...P(-.2, -.06), .45 * s, .18 * s, c);
+      for (const u of [-.2, .02, .24]) ln(...P(u, .26), ...P(u - .07, .46), c, .08 * s); break;
+    case 'snow':
+      for (let i = 0; i < 3; i++) { const t = i * Math.PI / 3 + Math.PI / 2; ln(x - Math.cos(t) * .46 * s, y - Math.sin(t) * .46 * s, x + Math.cos(t) * .46 * s, y + Math.sin(t) * .46 * s, c, .09 * s); } break;
+    case 'weather': icon(WX[S.weather].icon, x, y, s, c, bg); break;
+  }
+}
+
+// ---------- the face ----------
+function isNight(d) { if (S.sky === 'day') return false; if (S.sky === 'night') return true; const h = d.getHours(); return h < 7 || h >= 17; }
+
+function timeString(d) {
+  let h = d.getHours(); const m = String(d.getMinutes()).padStart(2, '0');
+  if (S.clock === '12') { h = h % 12 || 12; return `${h}:${m}`; }
+  return `${String(h).padStart(2, '0')}:${m}`;
+}
+
+function layout(d) {
+  const L = { boxes: [] };
+  const large = S.timeSize === 'large';
+  L.side = !large && (S.slots.left !== 'none' || S.slots.right !== 'none');
+  L.time = timeString(d);
+  L.timeY = 172;
+  L.timeSize = large ? 124 : 90;   // the sizes baked into the watch fonts
+  ctx.font = FONT_TIME(L.timeSize);
+  const tw = ctx.measureText(L.time).width, th = L.timeSize * .72;
+  L.boxes.push([C - tw / 2 - 8, L.timeY - th / 2 - 8, C + tw / 2 + 8, L.timeY + th / 2 + 10]);
+  if (S.slots.top !== 'none') L.boxes.push([92, 64, 362, 102]);
+  if (S.showDate) L.boxes.push([108, 104, 346, 128]);
+  if (L.side) { if (S.slots.left !== 'none') L.boxes.push([42, 140, 106, 206]); if (S.slots.right !== 'none') L.boxes.push([348, 140, 412, 206]); }
+  if (['b1','b2','b3'].some(k => S.slots[k] !== 'none')) L.boxes.push([96, 350, 358, 382]);
+  return L;
+}
+
+function drawSky(P, th, night) {
+  fr(0, 0, W, W, P.sky);
+  if (th.plaid) {
+    for (let x = -6; x < W; x += 58) fr(x, 0, 24, W, P.stripe);
+    for (let y = -6; y < W; y += 58) fr(0, y, W, 24, P.stripe);
+    for (let x = -6; x < W; x += 58) for (let y = -6; y < W; y += 58) fr(x, y, 24, 24, P.cross);
+  }
+  if (night) {
+    const r = rng(99);
+    for (let i = 0; i < 34; i++) {
+      const a = r() * TAU, d = Math.sqrt(r()) * 186, x = C + Math.cos(a) * d, y = C + Math.sin(a) * d;
+      if (y > 280) continue;
+      fc(x, y, .8 + r() * .9, P.star);
+    }
+    for (const [x, y, s] of [[132, 140, 6], [330, 112, 5], [176, 252, 4.5], [300, 240, 5.5]]) twinkle(x, y, s, P.star);
+  }
+}
+function twinkle(x, y, s, c) { fp([[x, y - s], [x + s * .28, y - s * .28], [x + s, y], [x + s * .28, y + s * .28], [x, y + s], [x - s * .28, y + s * .28], [x - s, y], [x - s * .28, y - s * .28]], c); }
+
+function pine(x, base, h, th, P, night) {
+  const w = h * .62, trunkH = h * .12;
+  fr(x - h * .05, base - trunkH, h * .1, trunkH + 2, th.trunk);
+  const tiers = 3;
+  for (let i = 0; i < tiers; i++) {
+    const top = base - trunkH - h * (0.38 + i * 0.3), bot = base - trunkH - h * (i * 0.27);
+    const ww = w * (1 - i * 0.24) / 2;
+    fp([[x, top], [x + ww, bot], [x - ww, bot]], i % 2 ? th.pine[1] : th.pine[0]);
+    fp([[x, top], [x + ww * .38, top + (bot - top) * .38], [x + ww * .1, top + (bot - top) * .32], [x - ww * .14, top + (bot - top) * .42], [x - ww * .38, top + (bot - top) * .38]], P.snowFront);
+  }
+}
+
+function drawScene(P, th, night) {
+  fc(120, 560, 270, P.snowBack);
+  fc(380, 590, 290, mix(P.snowBack, P.snowFront, .35));
+  pine(100, 318, 80, th, P, night);
+  pine(356, 324, 66, th, P, night);
+  pine(394, 320, 40, th, P, night);
+  pine(66, 330, 36, th, P, night);
+  // cottage
+  const k = th.cottage, glow = night;
+  fr(243, 244, 10, 20, k.roof); fr(241, 240, 14, 6, P.snowFront);
+  fr(197, 270, 60, 42, k.wall);
+  fp([[227, 242], [189, 276], [265, 276]], k.roof);
+  fp([[227, 234], [182, 273], [189, 280], [227, 246], [265, 280], [272, 273]], P.snowFront);
+  const win = P.window;
+  for (const wx of [203, 239]) {
+    if (glow) fr(wx - 3, 279, 18, 18, mix(k.wall, P.window, .45));
+    fr(wx, 282, 12, 12, win);
+    ln(wx + 6, 282, wx + 6, 294, k.trim, 1.6); ln(wx, 288, wx + 12, 288, k.trim, 1.6);
+  }
+  fr(221, 292, 12, 20, k.door); fc(230, 303, 1.3, P.snowFront);
+  fe(227, 314, 50, 8, P.snowBack);
+  // chimney smoke
+  const smoke = mix(P.sky, '#FFFFFF', .5);
+  fc(250, 234, 2.8, smoke); fc(254, 227, 3.4, smoke); fc(251, 219, 4, smoke);
+  // front drift
+  fe(227, 420, 262, 88, P.snowFront);
+  fe(110, 336, 28, 6, P.snowFront);
+  fe(352, 340, 34, 7, P.snowFront);
+}
+
+function drawSnow(P, L, seed) {
+  const r = rng(seed * 7919 + 13);
+  const n = S.weather === 'snow' ? 78 : 34;
+  let placed = 0, tries = 0;
+  while (placed < n && tries < n * 12) {
+    tries++;
+    const a = r() * TAU, d = Math.sqrt(r()) * 190, x = C + Math.cos(a) * d, y = C + Math.sin(a) * d;
+    if (L.boxes.some(([x1, y1, x2, y2]) => x > x1 && x < x2 && y > y1 && y < y2)) continue;
+    placed++;
+    if (r() < .16) { const s = 3.5 + r() * 2.5; for (let i = 0; i < 3; i++) { const t = i * Math.PI / 3; ln(x - Math.cos(t) * s, y - Math.sin(t) * s, x + Math.cos(t) * s, y + Math.sin(t) * s, P.flake, 1.3); } }
+    else fc(x, y, 1.2 + r() * (S.weather === 'snow' ? 1.8 : 1.3), P.flake);
+  }
+}
+
+function drawGlass(P) {
+  ctx.strokeStyle = P.glass; ctx.lineCap = 'round'; ctx.lineWidth = 5;
+  ctx.beginPath(); ctx.arc(C, C, 186, 206 * Math.PI / 180, 226 * Math.PI / 180); ctx.stroke();
+  ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(C, C, 186, 231 * Math.PI / 180, 236 * Math.PI / 180); ctx.stroke();
+}
+
+function wreathProgress() {
+  switch (S.wreath) { case 'stepGoal': return Math.min(1, S.steps / 10000); case 'bb': return S.bb / 100; case 'battery': return S.battery / 100; }
+  return 1;
+}
+
+function drawWreath(P, th) {
+  const g = th.greens;
+  ring(C, C, 213, g[0], 36);
+  const r = rng(7);
+  for (let i = 0; i < 280; i++) {
+    const a = r() * TAU, rad = 195 + r() * 33;
+    const cx = C + Math.cos(a) * rad, cy = C + Math.sin(a) * rad;
+    const dir = a + Math.PI / 2 + (r() - .5) * 1.5, L = 13 + r() * 7, w = 4.5 + r() * 2.2;
+    const ux = Math.cos(dir), uy = Math.sin(dir), nx = -uy, ny = ux;
+    fp([[cx + ux * L / 2, cy + uy * L / 2], [cx + nx * w / 2, cy + ny * w / 2], [cx - ux * L / 2, cy - uy * L / 2], [cx - nx * w / 2, cy - ny * w / 2]], g[1 + Math.floor(r() * 3)]);
+  }
+  for (let i = 0; i < 90; i++) {
+    const a = r() * TAU, rad = 197 + r() * 28, cx = C + Math.cos(a) * rad, cy = C + Math.sin(a) * rad, dir = a + Math.PI / 2 + (r() - .5) * 1.2;
+    ln(cx - Math.cos(dir) * 4, cy - Math.sin(dir) * 4, cx + Math.cos(dir) * 4, cy + Math.sin(dir) * 4, g[3], 1.6);
+  }
+  // berries
+  for (let i = 0; i < 16; i++) {
+    const a = (i / 16) * TAU + .21, rad = 204 + (i % 3) * 6, cx = C + Math.cos(a) * rad, cy = C + Math.sin(a) * rad;
+    if (Math.abs(((a * 180 / Math.PI) % 360) - 90) < 26) continue;
+    for (const [dx, dy] of [[-3, -1], [3, -2], [0, 3.5]]) { fc(cx + dx, cy + dy, 3.2, th.berry); fc(cx + dx - 1, cy + dy - 1, 1, mix(th.berry, '#FFFFFF', .6)); }
+  }
+  // ornaments: light up clockwise from the bow as progress grows
+  const N = 12, p = wreathProgress(), lit = S.wreath === 'off' ? N : Math.round(p * N);
+  for (let i = 0; i < N; i++) {
+    const deg = 112 + i * (316 / (N - 1)), a = deg * Math.PI / 180, R = 211;
+    const x = C + Math.cos(a) * R, y = C + Math.sin(a) * R, col = th.ornaments[i % th.ornaments.length];
+    const ux = Math.cos(a), uy = Math.sin(a), tx = -uy, ty = ux, rr = 9.5;
+    const bx = x + ux * (rr - 1), by = y + uy * (rr - 1);
+    fp([[bx + tx * 3, by + ty * 3], [bx + tx * 3 + ux * 5, by + ty * 3 + uy * 5], [bx - tx * 3 + ux * 5, by - ty * 3 + uy * 5], [bx - tx * 3, by - ty * 3]], mix(th.knot, '#FFFFFF', .15));
+    if (i < lit) {
+      fc(x, y, rr, col);
+      fc(x - 3, y - 3.2, 2.6, mix(col, '#FFFFFF', .75));
+      if (i === lit - 1 && lit < N) twinkle(x + 10, y - 11, 6, P.star === '#FFFFFF' ? '#FFFFFF' : P.star);
+    } else {
+      fc(x, y, rr, mix(col, g[0], .4));
+    }
+  }
+  // the bow at six o'clock
+  const bx = 227, by = 422;
+  fp([[bx - 5, by + 3], [bx - 23, by + 31], [bx - 14, by + 27], [bx - 9, by + 35], [bx + 1, by + 6]], th.bowDark);
+  fp([[bx + 5, by + 3], [bx + 23, by + 31], [bx + 14, by + 27], [bx + 9, by + 35], [bx - 1, by + 6]], th.bowDark);
+  fp([[bx - 4, by], [bx - 30, by - 17], [bx - 39, by - 6], [bx - 34, by + 9], [bx - 4, by + 4]], th.bow);
+  fp([[bx + 4, by], [bx + 30, by - 17], [bx + 39, by - 6], [bx + 34, by + 9], [bx + 4, by + 4]], th.bow);
+  fp([[bx - 6, by + 1], [bx - 24, by - 9], [bx - 27, by + 3]], th.bowDark);
+  fp([[bx + 6, by + 1], [bx + 24, by - 9], [bx + 27, by + 3]], th.bowDark);
+  ctx.fillStyle = th.knot; ctx.beginPath(); ctx.roundRect(bx - 6.5, by - 7, 13, 14, 4); ctx.fill();
+}
+
+function drawText(P, th, L, d) {
+  if (S.slots.top !== 'none') {
+    const t = lineText(S.slots.top, d);
+    ctx.font = FONT_LINE(36);
+    if (ctx.measureText(t).width <= 252) textCentered(t, C, 84, FONT_LINE(36), P.line);
+    else textCentered(t, C, 84, FONT_DATA(22), P.line);
+  }
+  if (S.showDate) {
+    const t = d.toLocaleDateString('en-US', { weekday:'long' }).toUpperCase() + '  ·  ' + d.toLocaleDateString('en-US', { month:'short', day:'numeric' }).toUpperCase();
+    textCentered(t, C, 117, FONT_DATA(16), P.date, 2.4);
+  }
+  textCentered(L.time, C, L.timeY, FONT_TIME(L.timeSize), P.time);
+  if (L.side) {
+    for (const [k, x] of [['left', 74], ['right', 380]]) {
+      const id = S.slots[k]; if (id === 'none') continue; const m = MBY[id];
+      icon(m.icon, x, 157, 24, P.icon, P.sky);
+      const v = smallValue(id, d); ctx.font = FONT_DATA(22);
+      textCentered(v, x, 190, FONT_DATA(ctx.measureText(v).width <= 62 ? 22 : 19), P.data);
+    }
+  }
+  for (const [k, x] of [['b1', 141], ['b2', 227], ['b3', 313]]) {
+    const id = S.slots[k]; if (id === 'none') continue; const m = MBY[id];
+    const v = smallValue(id, d); ctx.font = FONT_DATA(19); const tw = ctx.measureText(v).width;
+    const total = 18 + 5 + tw, left = x - total / 2;
+    icon(m.icon, left + 9, 366, 18, th.iconSnow, P.snowFront);
+    ctx.textAlign = 'left'; ctx.fillStyle = P.dataSnow; ctx.textBaseline = 'alphabetic';
+    const mm = ctx.measureText(v); ctx.fillText(v, left + 23, 366 + (mm.actualBoundingBoxAscent - mm.actualBoundingBoxDescent) / 2);
+  }
+}
+
+function drawAOD(d) {
+  const th = THEMES[S.theme];
+  fr(0, 0, W, W, '#000000');
+  const m = d.getMinutes(), dx = ((m % 5) - 2) * 3, dy = ((Math.floor(m / 5) % 5) - 2) * 3;
+  const col = mix(th.night.time, '#000000', .45);
+  const t = timeString(d), s = S.timeSize === 'large' ? 124 : 90;
+  twinkle(C + dx, 118 + dy, 7, col);
+  textCentered(t, C + dx, 190 + dy, FONT_TIME(s), col);
+}
+
+function currentDate() { return live ? new Date() : new Date(manualDate); }
+
+function render() {
+  const d = currentDate();
+  const k = canvas.width / W; ctx.setTransform(k, 0, 0, k, 0, 0);
+  if (aod) { drawAOD(d); return; }
+  const th = THEMES[S.theme], night = isNight(d), P = night ? th.night : th.day;
+  const awake = Date.now() < awakeUntil;
+  const seed = Math.floor(d.getTime() / 60000) * 100 + (awake ? new Date().getSeconds() : 0);
+  const L = layout(d);
+  drawSky(P, th, night);
+  drawScene(P, th, night);
+  drawGlass(P);
+  drawWreath(P, th);
+  drawSnow(P, L, seed);   // on top of the wreath, as on the watch
+  drawText(P, th, L, d);
+}
+
+// ---------- canvas sizing ----------
+function resize() {
+  const css = canvas.getBoundingClientRect().width || 340;
+  const px = Math.round(css * Math.min(3, window.devicePixelRatio || 1));
+  if (canvas.width !== px) { canvas.width = px; canvas.height = px; }
+  render();
+}
+new ResizeObserver(resize).observe(canvas);
+
+// ---------- controls ----------
+function fillSelect(sel, top) {
+  sel.innerHTML = '';
+  let og = null, cur = null;
+  for (const m of METRICS) {
+    if (m.topOnly && !top) continue;
+    if (m.group !== cur) { cur = m.group; og = m.group ? document.createElement('optgroup') : sel; if (m.group) { og.label = m.group; sel.appendChild(og); } }
+    const o = document.createElement('option'); o.value = m.id; o.textContent = m.name.replace(' (top line only)', top ? '' : ' (top line only)'); og.appendChild(o);
+  }
+}
+for (const k of SLOT_IDS) {
+  const sel = document.getElementById('slot-' + k);
+  fillSelect(sel, k === 'top');
+  sel.value = S.slots[k];
+  sel.addEventListener('change', () => { S.slots[k] = sel.value; save(); render(); });
+}
+const wreathSel = document.getElementById('wreath');
+wreathSel.value = S.wreath; wreathSel.addEventListener('change', () => { S.wreath = wreathSel.value; save(); render(); });
+
+for (const name of ['theme', 'timeSize', 'clock', 'sky', 'weather']) {
+  document.querySelectorAll(`input[name="${name}"]`).forEach(inp => {
+    inp.checked = inp.value === String(S[name]);
+    inp.addEventListener('change', () => { if (inp.checked) { S[name] = inp.value; save(); render(); } });
+  });
+}
+const showDate = document.getElementById('showDate');
+showDate.checked = S.showDate; showDate.addEventListener('change', () => { S.showDate = showDate.checked; save(); render(); });
+
+for (const [id, key, suffix] of [['steps', 'steps', ''], ['bb', 'bb', ''], ['battery', 'battery', '%']]) {
+  const inp = document.getElementById(id), out = document.getElementById(id + 'Out');
+  const show = () => { out.textContent = (key === 'steps' ? fmt(+inp.value) : inp.value) + suffix; };
+  inp.value = S[key]; show();
+  inp.addEventListener('input', () => { S[key] = +inp.value; show(); save(); render(); });
+}
+
+const dateIn = document.getElementById('dateIn'), timeIn = document.getElementById('timeIn');
+const pad = n => String(n).padStart(2, '0');
+function syncInputs(d) { dateIn.value = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; timeIn.value = `${pad(d.getHours())}:${pad(d.getMinutes())}`; }
+function fromInputs() {
+  const [y, mo, da] = (dateIn.value || '2026-11-26').split('-').map(Number);
+  const [h, mi] = (timeIn.value || '10:42').split(':').map(Number);
+  manualDate = new Date(y, mo - 1, da, h, mi).getTime(); live = false; render(); status();
+}
+dateIn.addEventListener('change', fromInputs); timeIn.addEventListener('change', fromInputs);
+document.getElementById('nowBtn').addEventListener('click', () => { live = true; syncInputs(new Date()); render(); status(); });
+document.querySelectorAll('[data-day]').forEach(b => b.addEventListener('click', () => {
+  const [mo, da] = b.dataset.day.split('-'); const y = +(dateIn.value || '2026').slice(0, 4);
+  const shown = currentDate(), yy = mo === '01' && shown.getMonth() >= 10 ? y + 1 : y;
+  dateIn.value = `${yy}-${mo}-${da}`; if (!timeIn.value) timeIn.value = '10:42'; fromInputs();
+}));
+
+const wakeBtn = document.getElementById('wake'), aodBtn = document.getElementById('aod'), statusEl = document.getElementById('status');
+wakeBtn.addEventListener('click', () => { aod = false; aodBtn.setAttribute('aria-pressed', 'false'); awakeUntil = Date.now() + 10000; render(); status(); });
+aodBtn.addEventListener('click', () => { aod = !aod; aodBtn.setAttribute('aria-pressed', String(aod)); awakeUntil = 0; render(); status(); });
+function status() {
+  const left = Math.ceil((awakeUntil - Date.now()) / 1000);
+  let t;
+  if (aod) t = 'Always-On: dim time only, nudged a little each minute to protect the screen';
+  else if (left > 0) t = `Wrist raised: the face redraws every second (${left}s left), so the snow shuffles`;
+  else t = 'Resting: the watch redraws once a minute';
+  if (!live) t += ' · showing a set date and time';
+  statusEl.textContent = t;
+}
+
+let lastMinute = -1;
+setInterval(() => {
+  const now = new Date();
+  const awake = Date.now() < awakeUntil;
+  if (live && now.getMinutes() !== lastMinute) { lastMinute = now.getMinutes(); syncInputs(now); render(); }
+  else if (awake || awakeUntil) { render(); if (!awake) awakeUntil = 0; }
+  status();
+}, 1000);
+
+syncInputs(new Date()); status();
+if (document.fonts) {
+  Promise.all([FONT_TIME(100), FONT_LINE(36), FONT_DATA(18)].map(f => document.fonts.load(f, '0123456789:Christmas'))).then(render, render);
+  document.fonts.ready.then(render);
+}
+render();
+})();
+</script>

@@ -1,0 +1,15 @@
+<properties>
+    <property id="Theme" type="number">0</property>
+    <property id="TimeSize" type="number">0</property>
+    <property id="Sky" type="number">0</property>
+    <property id="WreathLights" type="number">0</property>
+    <property id="ShowDate" type="boolean">true</property>
+    <!-- Spots. Metric ids (see M_* in source/ChristmasJoyView.mc), never renumbered:
+         0=Nothing  1=Christmas countdown  2=Saying of the day  3=Steps  4=Heart rate  5=Calories  6=Distance  7=Floors climbed  8=Active minutes  9=Step goal %  10=Body Battery  11=Stress  12=Respiration  13=Watch battery %  14=Battery days left  15=Notifications  16=Alarms  17=Altitude  18=Weather -->
+    <property id="SlotTop" type="number">1</property>
+    <property id="SlotLeft" type="number">4</property>
+    <property id="SlotRight" type="number">18</property>
+    <property id="SlotSnow1" type="number">3</property>
+    <property id="SlotSnow2" type="number">13</property>
+    <property id="SlotSnow3" type="number">15</property>
+</properties>

@@ -1,0 +1,43 @@
+project.manifest = manifest.xml
+
+# The base resources hold the 454x454 fonts; every 454x454 panel uses them
+# directly. Other panel sizes add a resources-round-WxH/fonts override baked by
+# tools/gen_fonts.py. The face itself is laid out on a 454 base and scaled.
+base.resourcePath = resources
+
+# --- 454x454 (base fonts): ---------------------------------------------------
+# fr57047mm, fr965, fr970, fenix847mm, fenix8pro47mm, epix2pro51mm, venu3,
+# venu445mm, approachs7047mm, d2mach2, descentmk351mm
+
+# --- 416x416: ----------------------------------------------------------------
+fr265.resourcePath               = $(base.resourcePath);resources-round-416x416
+fenix843mm.resourcePath          = $(base.resourcePath);resources-round-416x416
+fenixe.resourcePath              = $(base.resourcePath);resources-round-416x416
+epix2.resourcePath               = $(base.resourcePath);resources-round-416x416
+epix2pro47mm.resourcePath        = $(base.resourcePath);resources-round-416x416
+venu2.resourcePath               = $(base.resourcePath);resources-round-416x416
+venu2plus.resourcePath           = $(base.resourcePath);resources-round-416x416
+d2airx10.resourcePath            = $(base.resourcePath);resources-round-416x416
+d2mach1.resourcePath             = $(base.resourcePath);resources-round-416x416
+instinct3amoled50mm.resourcePath = $(base.resourcePath);resources-round-416x416
+
+# --- 390x390: ----------------------------------------------------------------
+fr165.resourcePath               = $(base.resourcePath);resources-round-390x390
+fr165m.resourcePath              = $(base.resourcePath);resources-round-390x390
+fr57042mm.resourcePath           = $(base.resourcePath);resources-round-390x390
+epix2pro42mm.resourcePath        = $(base.resourcePath);resources-round-390x390
+venu3s.resourcePath              = $(base.resourcePath);resources-round-390x390
+venu441mm.resourcePath           = $(base.resourcePath);resources-round-390x390
+vivoactive5.resourcePath         = $(base.resourcePath);resources-round-390x390
+vivoactive6.resourcePath         = $(base.resourcePath);resources-round-390x390
+instinct3amoled45mm.resourcePath = $(base.resourcePath);resources-round-390x390
+marq2.resourcePath               = $(base.resourcePath);resources-round-390x390
+marq2aviator.resourcePath        = $(base.resourcePath);resources-round-390x390
+approachs50.resourcePath         = $(base.resourcePath);resources-round-390x390
+approachs7042mm.resourcePath     = $(base.resourcePath);resources-round-390x390
+descentg2.resourcePath           = $(base.resourcePath);resources-round-390x390
+descentmk343mm.resourcePath      = $(base.resourcePath);resources-round-390x390
+
+# --- 360x360: ----------------------------------------------------------------
+fr265s.resourcePath              = $(base.resourcePath);resources-round-360x360
+venu2s.resourcePath              = $(base.resourcePath);resources-round-360x360

@@ -1,0 +1,178 @@
+<settings>
+    <setting propertyKey="@Properties.Theme" title="@Strings.ThemeTitle" prompt="@Strings.ThemePrompt">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.ThemeBlush</listEntry>
+            <listEntry value="1">@Strings.ThemeClassic</listEntry>
+            <listEntry value="2">@Strings.ThemeFrosted</listEntry>
+            <listEntry value="3">@Strings.ThemePlaid</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.TimeSize" title="@Strings.TimeSizeTitle" prompt="@Strings.TimeSizePrompt">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.SizeNormal</listEntry>
+            <listEntry value="1">@Strings.SizeLarge</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.Sky" title="@Strings.SkyTitle" prompt="@Strings.SkyPrompt">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.SkyAuto</listEntry>
+            <listEntry value="1">@Strings.SkyDay</listEntry>
+            <listEntry value="2">@Strings.SkyNight</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.WreathLights" title="@Strings.WreathTitle" prompt="@Strings.WreathPrompt">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.WreathSteps</listEntry>
+            <listEntry value="1">@Strings.WreathEnergy</listEntry>
+            <listEntry value="2">@Strings.WreathBattery</listEntry>
+            <listEntry value="3">@Strings.WreathAlways</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.ShowDate" title="@Strings.ShowDateTitle" prompt="@Strings.ShowDatePrompt">
+        <settingConfig type="boolean" />
+    </setting>
+
+    <setting propertyKey="@Properties.SlotTop" title="@Strings.SlotTopTitle" prompt="@Strings.SlotTopPrompt">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.MetricNone</listEntry>
+            <listEntry value="1">@Strings.MetricCountdown</listEntry>
+            <listEntry value="2">@Strings.MetricSaying</listEntry>
+            <listEntry value="3">@Strings.MetricSteps</listEntry>
+            <listEntry value="4">@Strings.MetricHr</listEntry>
+            <listEntry value="5">@Strings.MetricCals</listEntry>
+            <listEntry value="6">@Strings.MetricDist</listEntry>
+            <listEntry value="7">@Strings.MetricFloors</listEntry>
+            <listEntry value="8">@Strings.MetricActive</listEntry>
+            <listEntry value="9">@Strings.MetricGoal</listEntry>
+            <listEntry value="10">@Strings.MetricEnergy</listEntry>
+            <listEntry value="11">@Strings.MetricStress</listEntry>
+            <listEntry value="12">@Strings.MetricBreath</listEntry>
+            <listEntry value="13">@Strings.MetricBatt</listEntry>
+            <listEntry value="14">@Strings.MetricBattDays</listEntry>
+            <listEntry value="15">@Strings.MetricMsgs</listEntry>
+            <listEntry value="16">@Strings.MetricAlarms</listEntry>
+            <listEntry value="17">@Strings.MetricAlt</listEntry>
+            <listEntry value="18">@Strings.MetricWeather</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.SlotLeft" title="@Strings.SlotLeftTitle" prompt="@Strings.SlotPrompt">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.MetricNone</listEntry>
+            <listEntry value="1">@Strings.MetricCountdown</listEntry>
+            <listEntry value="3">@Strings.MetricSteps</listEntry>
+            <listEntry value="4">@Strings.MetricHr</listEntry>
+            <listEntry value="5">@Strings.MetricCals</listEntry>
+            <listEntry value="6">@Strings.MetricDist</listEntry>
+            <listEntry value="7">@Strings.MetricFloors</listEntry>
+            <listEntry value="8">@Strings.MetricActive</listEntry>
+            <listEntry value="9">@Strings.MetricGoal</listEntry>
+            <listEntry value="10">@Strings.MetricEnergy</listEntry>
+            <listEntry value="11">@Strings.MetricStress</listEntry>
+            <listEntry value="12">@Strings.MetricBreath</listEntry>
+            <listEntry value="13">@Strings.MetricBatt</listEntry>
+            <listEntry value="14">@Strings.MetricBattDays</listEntry>
+            <listEntry value="15">@Strings.MetricMsgs</listEntry>
+            <listEntry value="16">@Strings.MetricAlarms</listEntry>
+            <listEntry value="17">@Strings.MetricAlt</listEntry>
+            <listEntry value="18">@Strings.MetricWeather</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.SlotRight" title="@Strings.SlotRightTitle" prompt="@Strings.SlotPrompt">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.MetricNone</listEntry>
+            <listEntry value="1">@Strings.MetricCountdown</listEntry>
+            <listEntry value="3">@Strings.MetricSteps</listEntry>
+            <listEntry value="4">@Strings.MetricHr</listEntry>
+            <listEntry value="5">@Strings.MetricCals</listEntry>
+            <listEntry value="6">@Strings.MetricDist</listEntry>
+            <listEntry value="7">@Strings.MetricFloors</listEntry>
+            <listEntry value="8">@Strings.MetricActive</listEntry>
+            <listEntry value="9">@Strings.MetricGoal</listEntry>
+            <listEntry value="10">@Strings.MetricEnergy</listEntry>
+            <listEntry value="11">@Strings.MetricStress</listEntry>
+            <listEntry value="12">@Strings.MetricBreath</listEntry>
+            <listEntry value="13">@Strings.MetricBatt</listEntry>
+            <listEntry value="14">@Strings.MetricBattDays</listEntry>
+            <listEntry value="15">@Strings.MetricMsgs</listEntry>
+            <listEntry value="16">@Strings.MetricAlarms</listEntry>
+            <listEntry value="17">@Strings.MetricAlt</listEntry>
+            <listEntry value="18">@Strings.MetricWeather</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.SlotSnow1" title="@Strings.SlotSnow1Title" prompt="@Strings.SlotPrompt">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.MetricNone</listEntry>
+            <listEntry value="1">@Strings.MetricCountdown</listEntry>
+            <listEntry value="3">@Strings.MetricSteps</listEntry>
+            <listEntry value="4">@Strings.MetricHr</listEntry>
+            <listEntry value="5">@Strings.MetricCals</listEntry>
+            <listEntry value="6">@Strings.MetricDist</listEntry>
+            <listEntry value="7">@Strings.MetricFloors</listEntry>
+            <listEntry value="8">@Strings.MetricActive</listEntry>
+            <listEntry value="9">@Strings.MetricGoal</listEntry>
+            <listEntry value="10">@Strings.MetricEnergy</listEntry>
+            <listEntry value="11">@Strings.MetricStress</listEntry>
+            <listEntry value="12">@Strings.MetricBreath</listEntry>
+            <listEntry value="13">@Strings.MetricBatt</listEntry>
+            <listEntry value="14">@Strings.MetricBattDays</listEntry>
+            <listEntry value="15">@Strings.MetricMsgs</listEntry>
+            <listEntry value="16">@Strings.MetricAlarms</listEntry>
+            <listEntry value="17">@Strings.MetricAlt</listEntry>
+            <listEntry value="18">@Strings.MetricWeather</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.SlotSnow2" title="@Strings.SlotSnow2Title" prompt="@Strings.SlotPrompt">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.MetricNone</listEntry>
+            <listEntry value="1">@Strings.MetricCountdown</listEntry>
+            <listEntry value="3">@Strings.MetricSteps</listEntry>
+            <listEntry value="4">@Strings.MetricHr</listEntry>
+            <listEntry value="5">@Strings.MetricCals</listEntry>
+            <listEntry value="6">@Strings.MetricDist</listEntry>
+            <listEntry value="7">@Strings.MetricFloors</listEntry>
+            <listEntry value="8">@Strings.MetricActive</listEntry>
+            <listEntry value="9">@Strings.MetricGoal</listEntry>
+            <listEntry value="10">@Strings.MetricEnergy</listEntry>
+            <listEntry value="11">@Strings.MetricStress</listEntry>
+            <listEntry value="12">@Strings.MetricBreath</listEntry>
+            <listEntry value="13">@Strings.MetricBatt</listEntry>
+            <listEntry value="14">@Strings.MetricBattDays</listEntry>
+            <listEntry value="15">@Strings.MetricMsgs</listEntry>
+            <listEntry value="16">@Strings.MetricAlarms</listEntry>
+            <listEntry value="17">@Strings.MetricAlt</listEntry>
+            <listEntry value="18">@Strings.MetricWeather</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.SlotSnow3" title="@Strings.SlotSnow3Title" prompt="@Strings.SlotPrompt">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.MetricNone</listEntry>
+            <listEntry value="1">@Strings.MetricCountdown</listEntry>
+            <listEntry value="3">@Strings.MetricSteps</listEntry>
+            <listEntry value="4">@Strings.MetricHr</listEntry>
+            <listEntry value="5">@Strings.MetricCals</listEntry>
+            <listEntry value="6">@Strings.MetricDist</listEntry>
+            <listEntry value="7">@Strings.MetricFloors</listEntry>
+            <listEntry value="8">@Strings.MetricActive</listEntry>
+            <listEntry value="9">@Strings.MetricGoal</listEntry>
+            <listEntry value="10">@Strings.MetricEnergy</listEntry>
+            <listEntry value="11">@Strings.MetricStress</listEntry>
+            <listEntry value="12">@Strings.MetricBreath</listEntry>
+            <listEntry value="13">@Strings.MetricBatt</listEntry>
+            <listEntry value="14">@Strings.MetricBattDays</listEntry>
+            <listEntry value="15">@Strings.MetricMsgs</listEntry>
+            <listEntry value="16">@Strings.MetricAlarms</listEntry>
+            <listEntry value="17">@Strings.MetricAlt</listEntry>
+            <listEntry value="18">@Strings.MetricWeather</listEntry>
+        </settingConfig>
+    </setting>
+
+</settings>
